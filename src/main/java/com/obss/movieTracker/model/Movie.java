@@ -1,10 +1,16 @@
 package com.obss.movieTracker.model;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -14,8 +20,13 @@ import lombok.Setter;
 @Setter
 public class Movie {
 
+    Movie() {
+
+    }
+
     @Id
-    private int id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     @Column
     private String movieName;
     @Column
@@ -28,6 +39,15 @@ public class Movie {
     private String duration;
     @Column
     private String genre;
+
+    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "movies")
+    private Set<User> users = new HashSet<>();
+    /*
+     * @ManyToOne(cascade = CascadeType.ALL)
+     * 
+     * @JoinColumn(name = "director_id", referencedColumnName = "id") private
+     * Director owner;
+     */
 
     /**
      * @param movieName
@@ -45,6 +65,19 @@ public class Movie {
         IMDB_Rate = iMDB_Rate;
         this.duration = duration;
         this.genre = genre;
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see java.lang.Object#toString()
+     */
+
+    @Override
+    public String toString() {
+        return "Movie [IMDB_Rate=" + IMDB_Rate + ", director=" + director + ", duration=" + duration + ", genre="
+                + genre + ", id=" + id + ", movieName=" + movieName + ", releaseDate=" + releaseDate + ", users="
+                + users + "]";
     }
 
 }

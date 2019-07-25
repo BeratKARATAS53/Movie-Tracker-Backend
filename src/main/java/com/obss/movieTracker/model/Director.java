@@ -4,6 +4,8 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 import lombok.Getter;
@@ -15,7 +17,8 @@ import lombok.Setter;
 public class Director {
 
     @Id
-    private int id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     @Column
     private String directorName;
     @Column
@@ -23,16 +26,19 @@ public class Director {
     @Column
     private Date birthDate;
     @Column
-    private Double birthPlace;
+    private String birthPlace;
+    /*
+     * @OneToMany(mappedBy = "owner") private Set<Movie> movies;
+     */
 
     /**
      * @param directorName
      * @param directorSurname
      * @param birthDate
-     * @param birthPlace
+     * @param string
      */
 
-    public Director(String directorName, String directorSurname, Date birthDate, Double birthPlace) {
+    public Director(String directorName, String directorSurname, Date birthDate, String birthPlace) {
         this.directorName = directorName;
         this.directorSurname = directorSurname;
         this.birthDate = birthDate;

@@ -1,5 +1,7 @@
 package com.obss.movieTracker.service;
 
+import java.util.Optional;
+
 import com.obss.movieTracker.model.User;
 import com.obss.movieTracker.repository.UserRepository;
 
@@ -14,8 +16,11 @@ public class LoginService {
 
     LoginService() {
     }
-
-    public void login(User user) {
-    }
+    /*
+     * public boolean login(String username, String password) { if
+     * (userRep.existsById(username)) { Optional<User> user =
+     * userRep.findById(username); if (user.get().getPassword().equals(password)) {
+     * return true; } return false; } return false; }
+     */
 
 }
