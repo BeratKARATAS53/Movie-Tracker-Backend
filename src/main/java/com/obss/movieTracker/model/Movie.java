@@ -4,19 +4,18 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-import com.obss.movieTracker.model.DirectorModel;
-import com.obss.movieTracker.model.User;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.DecimalMax;
+import javax.validation.constraints.DecimalMin;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Getter;
@@ -37,26 +36,24 @@ public class Movie {
     @Column
     private String movieName;
     @Column
-    private String director;
-    @Column
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
     private Date releaseDate;
-    @Column
+    @Column(precision = 1, scale = 1)
+    @DecimalMin("0")
+    @DecimalMax("10")
     private Double IMDB_Rate;
     @Column
     private String duration;
     @Column
     private String genre;
 
-    @ManyToMany(mappedBy = "movies")
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "movies")
     @JsonIgnore
     private Set<User> users = new HashSet<>();
 
-    /*
-     * @ManyToOne(cascade = CascadeType.ALL)
-     * 
-     * @JoinColumn(name = "director_id", referencedColumnName = "id") private
-     * private Director director;
-     */
+    @ManyToOne
+    private Director director;
+
     /**
      * @param movieName
      * @param director
@@ -66,7 +63,8 @@ public class Movie {
      * @param genre
      */
 
-    public Movie(String movieName, String director, Date releaseDate, Double iMDB_Rate, String duration, String genre) {
+    public Movie(String movieName, Director director, Date releaseDate, Double iMDB_Rate, String duration,
+            String genre) {
         this.movieName = movieName;
         this.director = director;
         this.releaseDate = releaseDate;

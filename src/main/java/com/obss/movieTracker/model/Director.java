@@ -1,12 +1,18 @@
 package com.obss.movieTracker.model;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -14,7 +20,11 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-public class DirectorModel {
+public class Director {
+
+    Director() {
+
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,12 +34,14 @@ public class DirectorModel {
     @Column
     private String directorSurname;
     @Column
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
     private Date birthDate;
     @Column
     private String birthPlace;
-    /*
-     * @OneToMany(mappedBy = "owner") private Set<Movie> movies;
-     */
+
+    @OneToMany
+    @JoinColumn(name = "director_id")
+    public Set<Movie> movies = new HashSet<>();
 
     /**
      * @param directorName
@@ -38,7 +50,7 @@ public class DirectorModel {
      * @param string
      */
 
-    public DirectorModel(String directorName, String directorSurname, Date birthDate, String birthPlace) {
+    public Director(String directorName, String directorSurname, Date birthDate, String birthPlace) {
         this.directorName = directorName;
         this.directorSurname = directorSurname;
         this.birthDate = birthDate;

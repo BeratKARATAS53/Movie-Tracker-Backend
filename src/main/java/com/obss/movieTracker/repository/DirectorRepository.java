@@ -1,13 +1,13 @@
 package com.obss.movieTracker.repository;
 
-import java.util.List;
+import java.util.Optional;
 
-import com.obss.movieTracker.model.DirectorModel;
+import com.obss.movieTracker.model.Director;
 
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface DirectorRepository extends CrudRepository<DirectorModel, Integer> {
-
+public interface DirectorRepository extends CrudRepository<Director, Integer> {
+    Optional<Director> findByDirectorName(String name);
 }
