@@ -1,8 +1,9 @@
 package com.obss.movieTracker.service;
 
+import java.util.Optional;
 import java.util.List;
 
-import com.obss.movieTracker.model.DirectorModel;
+import com.obss.movieTracker.model.Director;
 import com.obss.movieTracker.model.Movie;
 import com.obss.movieTracker.model.User;
 import com.obss.movieTracker.repository.UserRepository;
@@ -19,16 +20,28 @@ public class AdminService {
     AdminService() {
     }
 
-    public List<Movie> addMovies() {
-        return null;
+    public boolean addUser(User user) {
+        Optional<User> uList = userRep.findByUsername(user.getUsername());
+        if (!uList.isPresent()) {
+            return true;
+        }
+        return false;
     }
 
-    public List<Movie> deleteMovies() {
-        return null;
+    public boolean deleteUser(int id) {
+        if (userRep.existsById(id)) {
+            return true;
+        }
+        return false;
     }
 
-    public List<Movie> updateMovies() {
-        return null;
+    public boolean updateUser(User user) {
+        Optional<User> uList = userRep.findByUsername(user.getUsername());
+        if (uList.isPresent()) {
+            System.out.println(uList.get());
+            return true;
+        }
+        return false;
     }
 
     public List<Movie> search(User user) {
@@ -39,7 +52,7 @@ public class AdminService {
         return null;
     }
 
-    public List<Movie> search(DirectorModel Director) {
+    public List<Movie> search(Director Director) {
         return null;
     }
 

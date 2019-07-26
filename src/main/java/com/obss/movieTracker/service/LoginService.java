@@ -1,8 +1,5 @@
 package com.obss.movieTracker.service;
 
-import java.util.Optional;
-
-import com.obss.movieTracker.model.User;
 import com.obss.movieTracker.repository.UserRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;

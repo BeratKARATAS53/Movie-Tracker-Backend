@@ -13,6 +13,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinTable;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -20,6 +22,7 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = { "username", "email" }))
 public class User {
 
     User() {
