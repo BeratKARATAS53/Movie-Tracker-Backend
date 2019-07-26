@@ -28,7 +28,7 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private int id;
     @Column
     private String type;
     @Column(unique = true)
@@ -56,7 +56,8 @@ public class User {
      * @param password
      */
 
-    public User(String username, String email, String firstName, String lastName, String password) {
+    public User(String type, String username, String email, String firstName, String lastName, String password) {
+        this.type = type;
         this.username = username;
         this.email = email;
         this.firstName = firstName;
@@ -64,4 +65,10 @@ public class User {
         this.password = password;
     }
 
+    public boolean isAdmin(User user) {
+        if (user.getType().equalsIgnoreCase("admin")) {
+            return true;
+        }
+        return false;
+    }
 }

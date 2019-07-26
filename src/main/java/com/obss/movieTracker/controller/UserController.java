@@ -22,22 +22,15 @@ public class UserController {
     @Autowired
     private UserRepository userRep;
     @Autowired
-    private MovieRepository movieRep;
-    @Autowired
     private AdminService adminServ;
     @Autowired
     private LoginService loginServ;
     @Autowired
     private UserService userServ;
-    @Autowired
-    private MovieService movieServ;
 
     @GetMapping
-    private ResponseEntity<?> getUserList() {
-        if (userRep.count() > 0) {
-            return new ResponseEntity<>(userRep.findAll(), HttpStatus.OK);
-        }
-        return new ResponseEntity<>("YOK", HttpStatus.NOT_FOUND);
+    private Iterable<User> getUserList() {
+        return userRep.findAll();
     }
 
 }

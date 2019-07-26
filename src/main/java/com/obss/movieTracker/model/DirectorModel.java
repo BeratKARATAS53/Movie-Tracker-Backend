@@ -14,11 +14,11 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-public class Director {
+public class DirectorModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private int id;
     @Column
     private String directorName;
     @Column
@@ -38,11 +38,23 @@ public class Director {
      * @param string
      */
 
-    public Director(String directorName, String directorSurname, Date birthDate, String birthPlace) {
+    public DirectorModel(String directorName, String directorSurname, Date birthDate, String birthPlace) {
         this.directorName = directorName;
         this.directorSurname = directorSurname;
         this.birthDate = birthDate;
         this.birthPlace = birthPlace;
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see java.lang.Object#toString()
+     */
+
+    @Override
+    public String toString() {
+        return "Director [id=" + id + "birthDate=" + birthDate + ", birthPlace=" + birthPlace + ", directorName="
+                + directorName + ", directorSurname=" + directorSurname + "]";
     }
 
 }

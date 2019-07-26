@@ -4,13 +4,20 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.obss.movieTracker.model.DirectorModel;
+import com.obss.movieTracker.model.User;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -20,13 +27,13 @@ import lombok.Setter;
 @Setter
 public class Movie {
 
-    Movie() {
+    public Movie() {
 
     }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private int id;
     @Column
     private String movieName;
     @Column
@@ -40,15 +47,16 @@ public class Movie {
     @Column
     private String genre;
 
-    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "movies")
+    @ManyToMany(mappedBy = "movies")
+    @JsonIgnore
     private Set<User> users = new HashSet<>();
+
     /*
      * @ManyToOne(cascade = CascadeType.ALL)
      * 
      * @JoinColumn(name = "director_id", referencedColumnName = "id") private
-     * Director owner;
+     * private Director director;
      */
-
     /**
      * @param movieName
      * @param director
@@ -76,8 +84,7 @@ public class Movie {
     @Override
     public String toString() {
         return "Movie [IMDB_Rate=" + IMDB_Rate + ", director=" + director + ", duration=" + duration + ", genre="
-                + genre + ", id=" + id + ", movieName=" + movieName + ", releaseDate=" + releaseDate + ", users="
-                + users + "]";
+                + genre + ", id=" + id + ", movieName=" + movieName + ", releaseDate=" + releaseDate;
     }
 
 }

@@ -2,7 +2,7 @@ package com.obss.movieTracker.service;
 
 import java.util.List;
 
-import com.obss.movieTracker.model.Director;
+import com.obss.movieTracker.model.DirectorModel;
 import com.obss.movieTracker.model.Movie;
 import com.obss.movieTracker.model.User;
 import com.obss.movieTracker.repository.UserRepository;
@@ -39,7 +39,7 @@ public class AdminService {
         return null;
     }
 
-    public List<Movie> search(Director Director) {
+    public List<Movie> search(DirectorModel Director) {
         return null;
     }
 
