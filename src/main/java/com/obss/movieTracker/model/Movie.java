@@ -32,7 +32,7 @@ public class Movie {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
     @Column
     private String movieName;
     @Column
@@ -41,7 +41,7 @@ public class Movie {
     @Column(precision = 1, scale = 1)
     @DecimalMin("0")
     @DecimalMax("10")
-    private Double IMDB_Rate;
+    private Double imdbRate;
     @Column
     private String duration;
     @Column
@@ -49,7 +49,7 @@ public class Movie {
 
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "movies")
     @JsonIgnore
-    private Set<User> users = new HashSet<>();
+    private Set<Users> users = new HashSet<>();
 
     @ManyToOne
     private Director director;
@@ -63,12 +63,12 @@ public class Movie {
      * @param genre
      */
 
-    public Movie(String movieName, Director director, Date releaseDate, Double iMDB_Rate, String duration,
+    public Movie(String movieName, Director director, Date releaseDate, Double imdbRate, String duration,
             String genre) {
         this.movieName = movieName;
         this.director = director;
         this.releaseDate = releaseDate;
-        IMDB_Rate = iMDB_Rate;
+        this.imdbRate = imdbRate;
         this.duration = duration;
         this.genre = genre;
     }
@@ -81,8 +81,8 @@ public class Movie {
 
     @Override
     public String toString() {
-        return "Movie [IMDB_Rate=" + IMDB_Rate + ", director=" + director + ", duration=" + duration + ", genre="
-                + genre + ", id=" + id + ", movieName=" + movieName + ", releaseDate=" + releaseDate;
+        return "Movie [IMDB_Rate=" + imdbRate + ", director=" + director + ", duration=" + duration + ", genre=" + genre
+                + ", id=" + id + ", movieName=" + movieName + ", releaseDate=" + releaseDate;
     }
 
 }

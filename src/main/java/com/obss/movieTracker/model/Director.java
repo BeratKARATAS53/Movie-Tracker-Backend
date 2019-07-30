@@ -13,6 +13,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -28,7 +29,7 @@ public class Director {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
     @Column
     private String directorName;
     @Column
@@ -41,6 +42,7 @@ public class Director {
 
     @OneToMany
     @JoinColumn(name = "director_id")
+    @JsonIgnore
     public Set<Movie> movies = new HashSet<>();
 
     /**

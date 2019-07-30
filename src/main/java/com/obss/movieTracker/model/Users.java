@@ -1,5 +1,6 @@
 package com.obss.movieTracker.model;
 
+import java.util.List;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -23,26 +24,24 @@ import lombok.Setter;
 @Getter
 @Setter
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = { "username", "email" }))
-public class User {
+public class Users {
 
-    User() {
+    public Users() {
 
     }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-    @Column
-    private String type;
-    @Column(unique = true)
+    private Integer id;
+    @Column(unique = true, length = 50)
     private String username;
-    @Column(unique = true)
+    @Column(unique = true, length = 100)
     private String email;
-    @Column
+    @Column(length = 75)
     private String firstName;
-    @Column
+    @Column(length = 75)
     private String lastName;
-    @Column
+    @Column(length = 200)
     private String password;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
@@ -50,6 +49,10 @@ public class User {
             @JoinColumn(name = "user_id", referencedColumnName = "id") }, inverseJoinColumns = {
                     @JoinColumn(name = "movie_id", referencedColumnName = "id") })
     private Set<Movie> movies = new HashSet<>();
+
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    @JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
+    private List<Role> roles;
 
     /**
      * @param username
@@ -59,8 +62,7 @@ public class User {
      * @param password
      */
 
-    public User(String type, String username, String email, String firstName, String lastName, String password) {
-        this.type = type;
+    public Users(String username, String email, String firstName, String lastName, String password) {
         this.username = username;
         this.email = email;
         this.firstName = firstName;
@@ -68,10 +70,22 @@ public class User {
         this.password = password;
     }
 
-    public boolean isAdmin(User user) {
-        if (user.getType().equalsIgnoreCase("admin")) {
-            return true;
-        }
-        return false;
+    public Users(String username, String firstName, String lastName, String email, String password, List<Role> roles) {
+        this.username = username;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.password = password;
+        this.roles = roles;
     }
+    /* (non-Javadoc)
+     * @see java.lang.Object#toString()
+     */
+
+    @Override
+    public String toString() {
+        return "Users [email=" + email + ", firstName=" + firstName + ", id=" + id + ", lastName=" + lastName
+                + ", movies=" + movies + ", password=" + password + ", roles=" + roles + ", username=" + username + "]";
+    }
+
 }

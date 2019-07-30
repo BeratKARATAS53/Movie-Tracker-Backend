@@ -1,41 +1,21 @@
 package com.obss.movieTracker.service;
 
-import java.util.List;
-
+import com.obss.movieTracker.Error;
 import com.obss.movieTracker.model.Movie;
-import com.obss.movieTracker.repository.MovieRepository;
+import com.obss.movieTracker.model.request.MovieRequestBody;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class MovieService {
+public interface MovieService {
 
-    @Autowired
-    private MovieRepository movieRep;
+    Movie getMovieById(int id) throws Error;
 
-    MovieService() {
-    }
+    Movie saveMovie(Movie movie);
 
-    public void addMovies(Movie movie) {
-        movieRep.save(movie);
-    }
+    Movie addMovie(MovieRequestBody movieRequestBody) throws Error;
 
-    public boolean deleteMovies(int id) {
-        if (!movieRep.existsById(id)) {
-            return false;
-        }
-        movieRep.deleteById(id);
-        return true;
-    }
+    Movie updateMovie(Movie movie) throws Error;
 
-    public boolean updateMovies(Movie movie) {
-        List<Movie> movies = movieRep.findByMovieName(movie.getMovieName());
-        if (movies == null) {
-            return false;
-        }
-        movieRep.deleteById(movie.getId());
-        movieRep.save(movie);
-        return true;
-    }
+    void deleteMovieById(int id) throws Error;
 }

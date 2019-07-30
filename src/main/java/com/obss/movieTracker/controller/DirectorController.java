@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/directors")
+@RequestMapping("/rest/directors")
 public class DirectorController {
     @Autowired
     private DirectorRepository directorRep;
@@ -38,7 +38,7 @@ public class DirectorController {
     }
 
     @DeleteMapping("/{id}")
-    private ResponseEntity<?> deleteDirector(@PathVariable("id") int id) {
+    private ResponseEntity<?> deleteDirector(@PathVariable("id") Integer id) {
         if (directorServ.deleteDirector(id)) {
             directorRep.deleteById(id);
             return new ResponseEntity<>("Director Silindi!", HttpStatus.OK);

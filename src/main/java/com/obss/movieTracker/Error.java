@@ -5,7 +5,8 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class Error {
+public class Error extends Exception {
+    private static final long serialVersionUID = 1L;
     private String mes;
 
     public Error(String mes) {

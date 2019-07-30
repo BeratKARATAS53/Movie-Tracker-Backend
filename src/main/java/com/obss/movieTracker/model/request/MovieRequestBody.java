@@ -1,10 +1,12 @@
-package com.obss.movieTracker.request;
+package com.obss.movieTracker.model.request;
 
 import java.util.Date;
 
 import lombok.Getter;
+import lombok.Setter;
 
 @Getter
+@Setter
 public class MovieRequestBody {
 
     public MovieRequestBody() {
@@ -13,7 +15,7 @@ public class MovieRequestBody {
 
     private String movieName;
     private Date releaseDate;
-    private Double IMDB_Rate;
+    private Double imdbRate;
     private String duration;
     private String genre;
     private Integer directorId;
@@ -27,11 +29,11 @@ public class MovieRequestBody {
      * @param directorId
      */
 
-    public MovieRequestBody(String movieName, Date releaseDate, Double iMDB_Rate, String duration, String genre,
+    public MovieRequestBody(String movieName, Date releaseDate, Double imdbRate, String duration, String genre,
             Integer directorId) {
         this.movieName = movieName;
         this.releaseDate = releaseDate;
-        IMDB_Rate = iMDB_Rate;
+        this.imdbRate = imdbRate;
         this.duration = duration;
         this.genre = genre;
         this.directorId = directorId;

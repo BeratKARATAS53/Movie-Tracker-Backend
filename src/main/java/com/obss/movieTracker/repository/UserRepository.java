@@ -1,15 +1,14 @@
 package com.obss.movieTracker.repository;
 
-import java.util.Optional;
-
-import com.obss.movieTracker.model.User;
-
-import org.springframework.data.repository.CrudRepository;
+import com.obss.movieTracker.model.Users;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface UserRepository extends CrudRepository<User, Integer> {
-    Optional<User> findByUsername(String username);
+public interface UserRepository extends JpaRepository<Users, Integer> {
+    Users findByUsername(String username);
 
-    Optional<User> findByEmail(String email);
+    Users findByEmail(String email);
+
+    boolean existsByUsername(String username);
 }

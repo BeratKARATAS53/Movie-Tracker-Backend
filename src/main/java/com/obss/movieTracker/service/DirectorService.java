@@ -21,7 +21,7 @@ public class DirectorService {
         directorRep.save(director);
     }
 
-    public boolean deleteDirector(int id) {
+    public boolean deleteDirector(Integer id) {
         if (directorRep.existsById(id)) {
             return true;
         }

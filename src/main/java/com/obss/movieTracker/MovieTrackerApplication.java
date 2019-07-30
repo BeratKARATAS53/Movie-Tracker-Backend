@@ -1,20 +1,26 @@
 package com.obss.movieTracker;
 
+import java.util.Arrays;
+
+import com.obss.movieTracker.model.Role;
+import com.obss.movieTracker.model.Users;
 /*
 import java.util.Date;
 import java.util.List;
 
 import com.obss.movieTracker.model.DirectorModel;
 import com.obss.movieTracker.model.Movie;
-import com.obss.movieTracker.model.User;
-*/
+
 import com.obss.movieTracker.repository.DirectorRepository;
 import com.obss.movieTracker.repository.MovieRepository;
+*/
 import com.obss.movieTracker.repository.UserRepository;
+import com.obss.movieTracker.service.UserService;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @SpringBootApplication
 public class MovieTrackerApplication {
@@ -23,9 +29,23 @@ public class MovieTrackerApplication {
 
 		ApplicationContext appContext = SpringApplication.run(MovieTrackerApplication.class, args);
 
-		UserRepository userRep = appContext.getBean(UserRepository.class);
-		MovieRepository movieRep = appContext.getBean(MovieRepository.class);
-		DirectorRepository directorRep = appContext.getBean(DirectorRepository.class);
+		UserService userServ = appContext.getBean(UserService.class);
+		//MovieRepository movieRep = appContext.getBean(MovieRepository.class);
+		//DirectorRepository directorRep = appContext.getBean(DirectorRepository.class);
+
+		// First Admin Adding
+		/*
+		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+		
+		Users admin = new Users("FirstAdmin", "First", "Admin", "admin@gmail.com", "password",
+				Arrays.asList(new Role("ROLE_ADMIN")));
+		admin.setPassword(passwordEncoder.encode(admin.getPassword()));
+		userServ.saveUser(admin);
+		Users user = new Users("FirstUser", "First", "User", "user@gmail.com", "password",
+				Arrays.asList(new Role("ROLE_USER")));
+		user.setPassword(passwordEncoder.encode(user.getPassword()));
+		userServ.saveUser(user);
+		*/
 		/*
 				User user1 = new User("user", "Ali123", "a@c", "ali", "kara", "123");
 				User user2 = new User("user", "Veli234", "v@c", "veli", "beyaz", "234");

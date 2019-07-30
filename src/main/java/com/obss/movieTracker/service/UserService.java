@@ -2,32 +2,23 @@ package com.obss.movieTracker.service;
 
 import java.util.List;
 
-import com.obss.movieTracker.model.Movie;
-import com.obss.movieTracker.repository.UserRepository;
+import com.obss.movieTracker.Error;
+import com.obss.movieTracker.model.Role;
+import com.obss.movieTracker.model.Users;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class UserService {
+public interface UserService {
 
-    @Autowired
-    private UserRepository userRep;
+    Users getUserById(int id) throws Error;
 
-    UserService() {
-    }
+    Users saveUser(Users user);
 
-    public List<Movie> seeMovieList() {
-        return null;
+    Users addUser(String username, String firstName, String lastName, String email, String password, List<Role> roles)
+            throws Error;
 
-    }
+    Users updateUser(Users user) throws Error;
 
-    public void addWatchedList(Movie movie) {
-
-    }
-
-    public void addFavoriteList(Movie movie) {
-
-    }
-
+    void deleteUserById(int id) throws Error;
 }
