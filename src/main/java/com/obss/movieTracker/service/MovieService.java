@@ -1,5 +1,7 @@
 package com.obss.movieTracker.service;
 
+import java.text.ParseException;
+
 import com.obss.movieTracker.Error;
 import com.obss.movieTracker.model.Movie;
 import com.obss.movieTracker.model.request.MovieRequestBody;
@@ -13,7 +15,7 @@ public interface MovieService {
 
     Movie saveMovie(Movie movie);
 
-    Movie addMovie(MovieRequestBody movieRequestBody) throws Error;
+    Movie addMovie(MovieRequestBody movieRequestBody) throws Error, ParseException;
 
     Movie updateMovie(Movie movie) throws Error;
 

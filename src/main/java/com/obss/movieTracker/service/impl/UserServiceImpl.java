@@ -36,10 +36,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Users addUser(String username, String firstName, String lastName, String email, String password,
-            List<Role> roles) throws Error {
+    public Users addUser(String username, String firstName, String lastName, String email, String password)
+            throws Error {
         if (!userRepository.existsByUsername(username)) {
-            Users user = new Users(username, firstName, email, lastName, password, roles);
+            Users user = new Users(username, firstName, email, lastName, password);
             return saveUser(user);
         }
         throw new Error("Kullanıcı Zaten Sistemde Kayıtlı Bulunmakta!");
@@ -57,6 +57,12 @@ public class UserServiceImpl implements UserService {
         if (userRepository.existsById(id))
             userRepository.delete(getUserById(id));
         throw new Error("User Does Not Exist in DB");
+    }
+
+    @Override
+    public Users addUser(String username, String firstName, String lastName, String email, String password,
+            List<Role> roles) throws Error {
+        return null;
     }
 
 }

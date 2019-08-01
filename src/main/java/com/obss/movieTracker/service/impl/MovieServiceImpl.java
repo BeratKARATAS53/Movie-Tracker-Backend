@@ -1,5 +1,6 @@
 package com.obss.movieTracker.service.impl;
 
+import java.text.ParseException;
 import java.util.Optional;
 
 import com.obss.movieTracker.Error;
@@ -35,7 +36,7 @@ public class MovieServiceImpl implements MovieService {
     }
 
     @Override
-    public Movie addMovie(MovieRequestBody movie) {
+    public Movie addMovie(MovieRequestBody movie) throws ParseException {
         Optional<Director> director = directorRep.findById(movie.getDirectorId());
         Movie newMovie = new Movie(movie.getMovieName(), director.get(), movie.getReleaseDate(), movie.getImdbRate(),
                 movie.getDuration(), movie.getGenre());

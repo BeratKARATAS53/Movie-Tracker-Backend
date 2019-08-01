@@ -4,6 +4,9 @@ import com.obss.movieTracker.model.Movie;
 import com.obss.movieTracker.model.request.MovieRequestBody;
 import com.obss.movieTracker.repository.MovieRepository;
 import com.obss.movieTracker.service.impl.MovieServiceImpl;
+
+import java.text.ParseException;
+
 import com.obss.movieTracker.Error;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,7 +53,7 @@ public class MovieContoller {
     }*/
 
     @PostMapping
-    public void addMovies(@RequestBody MovieRequestBody movie) {
+    public void addMovies(@RequestBody MovieRequestBody movie) throws ParseException {
         movieServImpl.addMovie(movie);
     }
 

@@ -1,5 +1,7 @@
 package com.obss.movieTracker.model;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -50,12 +52,19 @@ public class Director {
      * @param directorSurname
      * @param birthDate
      * @param string
+     * @throws ParseException
      */
 
-    public Director(String directorName, String directorSurname, Date birthDate, String birthPlace) {
+    public Director(String directorName, String directorSurname, Date birthDate, String birthPlace)
+            throws ParseException {
         this.directorName = directorName;
         this.directorSurname = directorSurname;
-        this.birthDate = birthDate;
+
+        SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
+        String dateString = format.format(birthDate);
+        Date date = format.parse(dateString);
+
+        this.birthDate = date;
         this.birthPlace = birthPlace;
     }
 

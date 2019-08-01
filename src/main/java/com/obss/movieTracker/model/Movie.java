@@ -1,5 +1,7 @@
 package com.obss.movieTracker.model;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -12,8 +14,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.validation.constraints.DecimalMax;
-import javax.validation.constraints.DecimalMin;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -38,9 +38,7 @@ public class Movie {
     @Column
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
     private Date releaseDate;
-    @Column(precision = 1, scale = 1)
-    @DecimalMin("0")
-    @DecimalMax("10")
+    @Column
     private Double imdbRate;
     @Column
     private String duration;
@@ -61,13 +59,19 @@ public class Movie {
      * @param iMDB_Rate
      * @param duration
      * @param genre
+     * @throws ParseException
      */
 
-    public Movie(String movieName, Director director, Date releaseDate, Double imdbRate, String duration,
-            String genre) {
+    public Movie(String movieName, Director director, Date releaseDate, Double imdbRate, String duration, String genre)
+            throws ParseException {
         this.movieName = movieName;
         this.director = director;
-        this.releaseDate = releaseDate;
+
+        SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
+        String dateString = format.format(releaseDate);
+        Date date = format.parse(dateString);
+
+        this.releaseDate = date;
         this.imdbRate = imdbRate;
         this.duration = duration;
         this.genre = genre;

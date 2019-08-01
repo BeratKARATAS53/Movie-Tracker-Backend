@@ -18,6 +18,8 @@ public interface UserService {
     Users addUser(String username, String firstName, String lastName, String email, String password, List<Role> roles)
             throws Error;
 
+    Users addUser(String username, String firstName, String lastName, String email, String password) throws Error;
+
     Users updateUser(Users user) throws Error;
 
     void deleteUserById(int id) throws Error;
