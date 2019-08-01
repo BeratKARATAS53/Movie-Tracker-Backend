@@ -13,7 +13,13 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.AuthenticationEntryPoint;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
 import com.obss.movieTracker.service.impl.UserDetailsServiceImpl;
+
+import java.util.Arrays;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -22,6 +28,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private JwtAuthenticationProvider authenticationProvider;
+
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOrigins(Arrays.asList("*"));
+        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE"));
+        configuration.setAllowedHeaders(Arrays.asList("authorization", "content-type", "x-auth-token"));
+        configuration.setExposedHeaders(Arrays.asList("x-auth-token"));
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
+    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -33,15 +51,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
         // Entry points
-        http.authorizeRequests()//
-                .antMatchers("/rest/login").permitAll().antMatchers("/rest/users/**").hasAuthority("ROLE_ADMIN")
-                .antMatchers(HttpMethod.GET, "/rest/movies/**", "/rest/directors/**")
-                .hasAnyAuthority("ROLE_ADMIN", "ROLE_USER")
-                .antMatchers(HttpMethod.DELETE, "/rest/movies/**", "/rest/directors/**").hasAuthority("ROLE_ADMIN")
-                .antMatchers(HttpMethod.POST, "/rest/movies/**", "/rest/directors/**").hasAuthority("ROLE_ADMIN")
-                .antMatchers(HttpMethod.PUT, "/rest/movies/**", "/rest/directors/**").hasAuthority("ROLE_ADMIN")
-                // Disallow everything else..
-                .anyRequest().authenticated();
+        http.authorizeRequests().anyRequest().permitAll();
+        /*.antMatchers("/rest/login").permitAll();
+        .antMatchers("/rest/users/**").hasAuthority("ROLE_ADMIN")
+        .antMatchers(HttpMethod.GET, "/rest/movies/**", "/rest/directors/**")
+        .hasAnyAuthority("ROLE_ADMIN", "ROLE_USER")
+        .antMatchers(HttpMethod.DELETE, "/rest/movies/**", "/rest/directors/**").hasAuthority("ROLE_ADMIN")
+        .antMatchers(HttpMethod.POST, "/rest/movies/**", "/rest/directors/**").hasAuthority("ROLE_ADMIN")
+        .antMatchers(HttpMethod.PUT, "/rest/movies/**", "/rest/directors/**").hasAuthority("ROLE_ADMIN")
+        // Disallow everything else..
+        .anyRequest().authenticated();*/
 
         // Apply JWT
         http.apply(new AuthenticationConfigurer(authenticationProvider));
@@ -76,4 +95,5 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public UserDetailsService getUserDetailsService() {
         return new UserDetailsServiceImpl();
     }
+
 }

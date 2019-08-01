@@ -31,6 +31,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Users saveUser(Users user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepository.save(user);
     }
 
@@ -38,7 +39,7 @@ public class UserServiceImpl implements UserService {
     public Users addUser(String username, String firstName, String lastName, String email, String password,
             List<Role> roles) throws Error {
         if (!userRepository.existsByUsername(username)) {
-            Users user = new Users(username, firstName, email, lastName, passwordEncoder.encode(password), roles);
+            Users user = new Users(username, firstName, email, lastName, password, roles);
             return saveUser(user);
         }
         throw new Error("Kullanıcı Zaten Sistemde Kayıtlı Bulunmakta!");
