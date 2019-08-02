@@ -1,5 +1,6 @@
 package com.obss.movieTracker.service.impl;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,6 +32,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Users saveUser(Users user) {
+        user.setRoles(Arrays.asList(new Role("ROLE_USER")));
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepository.save(user);
     }
