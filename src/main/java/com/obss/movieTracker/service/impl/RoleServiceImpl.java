@@ -21,7 +21,7 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public Role getRoleById(Long id) throws Error {
+    public Role getRoleById(Integer id) throws Error {
         Optional<Role> role = roleRepository.findById(id);
         if (role.isPresent())
             return role.get();
@@ -36,7 +36,7 @@ public class RoleServiceImpl implements RoleService {
     @Override
     public Role addRole(String name) throws Error {
         if (!roleRepository.existsByName(name))
-            return saveRole(new Role(name));
+            return saveRole(new Role(2, name));
         throw new Error("Role Does Not Exists!");
 
     }
@@ -49,7 +49,7 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public void deleteRoleById(Long id) throws Error {
+    public void deleteRoleById(Integer id) throws Error {
         if (roleRepository.existsById(id))
             roleRepository.delete(getRoleById(id));
         throw new Error("Role Does Not Exists!");

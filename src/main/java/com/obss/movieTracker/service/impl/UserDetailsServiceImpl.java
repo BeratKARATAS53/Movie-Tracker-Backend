@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.*;
 
-import com.obss.movieTracker.model.Role;
 import com.obss.movieTracker.model.Users;
 import com.obss.movieTracker.repository.UserRepository;
 
@@ -24,17 +23,15 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Users user = userRepository.findByUsername(username);
         if (user != null) {
-            List<GrantedAuthority> authorities = getUserAuthority(user.getRoles());
+            List<GrantedAuthority> authorities = getUserAuthority(user.getRole());
             return buildUserForAuthentication(user, authorities);
         }
         throw new UsernameNotFoundException("Username not found");
     }
 
-    private List<GrantedAuthority> getUserAuthority(List<Role> list) {
+    private List<GrantedAuthority> getUserAuthority(String role) {
         List<GrantedAuthority> roles = new ArrayList<>();
-        list.forEach((role) -> {
-            roles.add(new SimpleGrantedAuthority(role.getName()));
-        });
+        roles.add(new SimpleGrantedAuthority(role));
         List<GrantedAuthority> grantedAuthorities = new ArrayList<>(roles);
         return grantedAuthorities;
     }

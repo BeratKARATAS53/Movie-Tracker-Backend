@@ -52,17 +52,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         // Entry points
         http.authorizeRequests().anyRequest().permitAll();
-        /*
-        http.authorizeRequests().antMatchers("/rest/login").permitAll()
-        .antMatchers("/rest/users/**").hasAuthority("ROLE_ADMIN")
-        .antMatchers(HttpMethod.GET, "/rest/movies/**", "/rest/directors/**")
-        .hasAnyAuthority("ROLE_ADMIN", "ROLE_USER")
-        .antMatchers(HttpMethod.DELETE, "/rest/movies/**", "/rest/directors/**").hasAuthority("ROLE_ADMIN")
-        .antMatchers(HttpMethod.POST, "/rest/movies/**", "/rest/directors/**").hasAuthority("ROLE_ADMIN")
-        .antMatchers(HttpMethod.PUT, "/rest/movies/**", "/rest/directors/**").hasAuthority("ROLE_ADMIN")
-        // Disallow everything else..
-        .anyRequest().authenticated();
-        */
+
+        /* http.authorizeRequests().antMatchers("/rest/login").permitAll()
+                .antMatchers(HttpMethod.GET, "/rest/users/**", "/rest/movies/**", "/rest/directors/**").permitAll()
+                .antMatchers(HttpMethod.DELETE, "/rest/users/**", "/rest/movies/**", "/rest/directors/**")
+                .hasAuthority("ROLE_ADMIN")
+                .antMatchers(HttpMethod.POST, "/rest/users/**", "/rest/movies/**", "/rest/directors/**")
+                .hasAuthority("ROLE_ADMIN")
+                .antMatchers(HttpMethod.PUT, "/rest/users/**", "/rest/movies/**", "/rest/directors/**")
+                .hasAuthority("ROLE_ADMIN")
+                // Disallow everything else..
+                .anyRequest().authenticated(); */
 
         // Apply JWT
         http.apply(new AuthenticationConfigurer(authenticationProvider));

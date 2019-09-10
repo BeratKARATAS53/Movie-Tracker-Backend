@@ -1,11 +1,9 @@
 package com.obss.movieTracker.controller;
 
-import java.util.Optional;
-
+import com.obss.movieTracker.Error;
 import com.obss.movieTracker.model.Users;
-import com.obss.movieTracker.repository.UserRepository;
-import com.obss.movieTracker.service.AdminService;
-import com.obss.movieTracker.service.impl.UserServiceImpl;
+import com.obss.movieTracker.model.request.UsersRequestBody;
+import com.obss.movieTracker.service.impl.AdminServiceImpl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -26,21 +24,16 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
 
     @Autowired
-    private UserServiceImpl userServiceImpl;
-    @Autowired
-    private UserRepository userRep;
-    @Autowired
-    private AdminService adminServ;
+    private AdminServiceImpl adminServiceImpl;
 
     @GetMapping()
-    private Iterable<Users> getUserList() {
-        return userRep.findAll();
+    private Iterable<Users> getUserList() throws Error {
+        return adminServiceImpl.getUsers();
     }
 
     @PostMapping
     private ResponseEntity<?> addUser(@RequestBody Users user) {
-        if (adminServ.addUser(user)) {
-            userServiceImpl.saveUser(user);
+        if (adminServiceImpl.addUser(user)) {
             return new ResponseEntity<>("Yeni Kullanıcı Eklendi!", HttpStatus.OK);
         }
         return new ResponseEntity<>("Hata! Kullanıcı Zaten Sistemde Kayıtlı", HttpStatus.FORBIDDEN);
@@ -48,25 +41,17 @@ public class UserController {
 
     @DeleteMapping("/{id}")
     private ResponseEntity<?> deleteUser(@PathVariable("id") Integer id) {
-        if (adminServ.deleteUser(id)) {
-            userRep.deleteById(id);
+        if (adminServiceImpl.deleteUser(id)) {
             return new ResponseEntity<>("Kullanıcı Silindi!", HttpStatus.OK);
         }
         return new ResponseEntity<>("Hata! Kullanıcı Sistemde Bulunamamakta!", HttpStatus.OK);
     }
 
     @PutMapping
-    private ResponseEntity<?> updateUser(@RequestBody Users user) {
-        if (adminServ.updateUser(user)) {
-            Optional<Users> uOpt = userRep.findById(user.getId());
-            userRep.deleteById(uOpt.get().getId());
-            userServiceImpl.saveUser(user);
+    private ResponseEntity<?> updateUser(@RequestBody UsersRequestBody usersRequestBody) {
+        if (adminServiceImpl.updateUser(usersRequestBody)) {
             return new ResponseEntity<>("Kullanıcı Güncellendi!", HttpStatus.OK);
         }
         return new ResponseEntity<>("Hata! Kullanıcı Sistemde Bulunamamakta!", HttpStatus.OK);
-    }
-
-    public void search(Users user) {
-        adminServ.search(user);
     }
 }

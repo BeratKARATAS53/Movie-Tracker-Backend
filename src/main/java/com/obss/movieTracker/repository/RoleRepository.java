@@ -6,7 +6,7 @@ import java.util.Optional;
 
 import com.obss.movieTracker.model.Role;
 
-public interface RoleRepository extends PagingAndSortingRepository<Role, Long> {
+public interface RoleRepository extends PagingAndSortingRepository<Role, Integer> {
 
     Optional<Role> findByName(String name);
 

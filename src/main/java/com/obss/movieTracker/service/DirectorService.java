@@ -1,38 +1,15 @@
 package com.obss.movieTracker.service;
 
-import java.util.Optional;
-
 import com.obss.movieTracker.model.Director;
-import com.obss.movieTracker.repository.DirectorRepository;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+public interface DirectorService {
 
-@Service
-public class DirectorService {
+    Iterable<Director> getDirectors();
 
-    @Autowired
-    private DirectorRepository directorRep;
+    void addDirector(Director director);
 
-    DirectorService() {
-    }
+    boolean updateDirector(Director director);
 
-    public void addDirector(Director director) {
-        directorRep.save(director);
-    }
+    boolean deleteDirector(Integer id);
 
-    public boolean deleteDirector(Integer id) {
-        if (directorRep.existsById(id)) {
-            return true;
-        }
-        return false;
-    }
-
-    public boolean updateDirector(Director director) {
-        Optional<Director> dExist = directorRep.findById(director.getId());
-        if (dExist.isPresent()) {
-            return true;
-        }
-        return false;
-    }
 }

@@ -33,7 +33,7 @@ public class LoginServiceImpl implements LoginService {
             } else {
                 authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
                         loginRequestBody.getUsername(), loginRequestBody.getPassword()));
-                String token = authenticationProvider.createToken(loginRequestBody.getUsername(), user.getRoles());
+                String token = authenticationProvider.createToken(loginRequestBody.getUsername(), user.getRole());
                 return token;
             }
         }

@@ -2,12 +2,10 @@ package com.obss.movieTracker.config;
 
 import java.util.Base64;
 import java.util.Date;
-import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 
-import com.obss.movieTracker.model.Role;
 import com.obss.movieTracker.service.impl.UserDetailsServiceImpl;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,9 +38,9 @@ public class JwtAuthenticationProvider {
         secretKey = Base64.getEncoder().encodeToString(secretKey.getBytes());
     }
 
-    public String createToken(String username, List<Role> roles) {
+    public String createToken(String username, String role) {
         Claims claims = Jwts.claims().setSubject(username);
-        claims.put("roles", roles);
+        claims.put("role", role);
         Date now = new Date();
         Date validity = new Date(now.getTime() + validityInMilliseconds);
         return Jwts.builder()//

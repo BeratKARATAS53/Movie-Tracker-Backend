@@ -9,7 +9,7 @@ public interface RoleService {
 
     Iterable<Role> getAllRoles();
 
-    Role getRoleById(Long id);
+    Role getRoleById(Integer id);
 
     Role saveRole(Role role);
 
@@ -17,6 +17,6 @@ public interface RoleService {
 
     Role updateRole(Role role) throws Error;
 
-    void deleteRoleById(Long id) throws Error;
+    void deleteRoleById(Integer id) throws Error;
 
 }

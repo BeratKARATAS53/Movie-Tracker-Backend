@@ -1,6 +1,5 @@
 package com.obss.movieTracker.model;
 
-import java.util.List;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -17,21 +16,19 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
 @Entity
-@Getter
-@Setter
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = { "username", "email" }))
 public class Users {
 
-    public Users() {
-
-    }
-
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
     @Column(unique = true, length = 50)
     private String username;
@@ -43,16 +40,14 @@ public class Users {
     private String lastName;
     @Column(length = 200)
     private String password;
+    @Column
+    private String role;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "user_movies", joinColumns = {
             @JoinColumn(name = "user_id", referencedColumnName = "id") }, inverseJoinColumns = {
                     @JoinColumn(name = "movie_id", referencedColumnName = "id") })
     private Set<Movie> movies = new HashSet<>();
-
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
-    @JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
-    private List<Role> roles;
 
     /**
      * @param username
@@ -70,14 +65,15 @@ public class Users {
         this.password = password;
     }
 
-    public Users(String username, String firstName, String lastName, String email, String password, List<Role> roles) {
+    public Users(String username, String email, String firstName, String lastName, String password, String role) {
         this.username = username;
+        this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.email = email;
         this.password = password;
-        this.roles = roles;
+        this.role = role;
     }
+
     /* (non-Javadoc)
      * @see java.lang.Object#toString()
      */
@@ -85,7 +81,17 @@ public class Users {
     @Override
     public String toString() {
         return "Users [email=" + email + ", firstName=" + firstName + ", id=" + id + ", lastName=" + lastName
-                + ", movies=" + movies + ", password=" + password + ", roles=" + roles + ", username=" + username + "]";
+                + ", movies=" + movies + ", password=" + password + ", role=" + role + ", username=" + username + "]";
     }
 
+    /**
+     * @param id
+     * @param username
+     * @param email
+     * @param firstName
+     * @param lastName
+     * @param password
+     * @param role
+     * @param movies
+     */
 }

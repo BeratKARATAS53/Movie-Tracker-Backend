@@ -1,49 +1,15 @@
 package com.obss.movieTracker.service;
 
 import com.obss.movieTracker.model.Users;
-import com.obss.movieTracker.repository.UserRepository;
+import com.obss.movieTracker.model.request.UsersRequestBody;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+public interface AdminService {
 
-@Service
-public class AdminService {
+    Iterable<Users> getUsers();
 
-    @Autowired
-    private UserRepository userRep;
+    boolean addUser(Users users);
 
-    AdminService() {
-    }
+    boolean updateUser(UsersRequestBody usersRequestBody);
 
-    public boolean addUser(Users user) {
-        Users users = userRep.findByUsername(user.getUsername());
-        if (users == null) {
-            return true;
-        }
-        return false;
-    }
-
-    public boolean deleteUser(Integer id) {
-        if (userRep.existsById(id)) {
-            return true;
-        }
-        return false;
-    }
-
-    public boolean updateUser(Users user) {
-        Users users = userRep.findByUsername(user.getUsername());
-        if (users != null) {
-            System.out.println(users);
-            return true;
-        }
-        return false;
-    }
-
-    public Users search(Users user) {
-        Users users = userRep.findByUsername(user.getUsername());
-        if (users != null) {
-            return user;
-        }
-        return null;
-    }
+    boolean deleteUser(Integer id);
 }
